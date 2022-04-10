@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
+import { MongoClient } from "mongodb";
 import bodyParser from "body-parser";
 let app = express();
 
@@ -33,7 +34,6 @@ app.post("/update-profile", function (req, res) {
 app.get("/get-profile", function (req, res) {
   let response: any = {};
   console.log("WIP: get-profile");
-
   res.send("WIP: get-profile");
 });
 
