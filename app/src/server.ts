@@ -25,16 +25,61 @@ app.get("/profile-picture", function (req, res) {
   res.end(img, "binary");
 });
 
+let mongoUrlLocal = "mongodb://admin:admin@localhost:27017";
+
+// use when starting application as docker container
+let mongoUrlDocker = "mongodb://admin:admin@mongodb";
+
+// "user-account" in demo with docker. "my-db" in demo with docker-compose
+let databaseName = "user-account";
+
 app.post("/update-profile", function (req, res) {
   let userObj = req.body;
-  console.log("WIP: update-profile");
+  try {
+    MongoClient.connect(
+      mongoUrlLocal,
+      // mongoClientOptions,
+      (err, client) => {
+        if (client) {
+          let db = client.db(databaseName);
+          userObj["userid"] = 1;
+
+          let query = { userid: 1 };
+          let newvalues = userObj;
+          let collection = db?.collection("users");
+          collection.updateOne(query, { $set: newvalues }, (err, result) => {
+            if (!err) {
+              console.log(result);
+              client.close();
+            }
+          });
+        }
+      }
+    );
+
+    res.status(200);
+    res.send(userObj);
+  } catch (e: any) {
+    res.status(404);
+    res.send(`Error connecting database: ${JSON.stringify(e)}`);
+  }
   res.send("WIP: update-profile");
 });
 
 app.get("/get-profile", function (req, res) {
-  let response: any = {};
-  console.log("WIP: get-profile");
-  res.send("WIP: get-profile");
+  // Connect to the db
+  try {
+    MongoClient.connect(mongoUrlLocal, async (err, client) => {
+      let db = client?.db(databaseName);
+      let query = { userid: 1 };
+      let collection = db?.collection("users");
+      let result = await collection?.findOne(query);
+      res.send(result);
+    });
+  } catch (e) {
+    res.status(404);
+    res.send(`Error connecting database: ${JSON.stringify(e)}`);
+  }
 });
 
 app.listen(3000, function () {
