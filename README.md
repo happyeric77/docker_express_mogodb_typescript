@@ -1,5 +1,7 @@
 # Run full-stack app by docker compose
 
+See the full doc from my [blog](https://hackmd.io/@happyeric77/HJE2oRyV5)
+
 1. Build the docker image through the following command
 
 ```
