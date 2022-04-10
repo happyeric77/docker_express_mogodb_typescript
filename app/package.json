@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node ./dist/server.js"
+    "start": "node ./dist/server.js",
+    "build": "tsc"
   },
   "author": "happyeric77",
   "license": "ISC",
