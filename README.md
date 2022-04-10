@@ -1,20 +1,37 @@
 # Run full-stack app by docker compose
 
-1. make sure cd into app dir and npm install all the package.
+1. Build the docker image through the following command
 
 ```
-npm install
-npm run build
+docker build . -t my-app
 ```
 
-2. Under ./app, run following command to boot up all containers
+2. Run docker compose to start up all containers
 
 ```
 docker-compose -f docker-compose.yaml up -d
 ```
 
-3. Start the application locally
+3. Create database, collection and user through mongo-express
+
+- go the localhost:8080
+- create a new database "user-account"
+- create a new collection "users"
+- create one object
 
 ```
-npm run start
+{
+  userid: 1,
+  name: "colerfullife"
+  email: "colorfullife.example.com"
+  interests: "coding"
+}
+```
+
+3. Access localhost:3000 to enjoy the application
+
+4. Close al containers through the following command
+
+```
+docker-compose -f docker-compose.yaml down
 ```
